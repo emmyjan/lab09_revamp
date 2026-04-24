@@ -1,8 +1,9 @@
 class Account:
-    def __init__(self, name, balance=0):
+    def __init__(self, name, balance=0, password="password"):
         self.__account_name = name
         self.__account_balance = balance
         self.set_balance(balance)
+        self.password = password
 
     def deposit(self, amount):
         if amount <= 0:
@@ -17,6 +18,9 @@ class Account:
         
         self.set_balance(self.get_balance() - amount)
         return True
+    
+    def check_password(self, password: str) -> bool:
+        return password == self.password
     
     def get_balance(self):
         return self.__account_balance
