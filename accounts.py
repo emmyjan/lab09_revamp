@@ -1,8 +1,12 @@
 class Account:
-    def __init__(self, name, balance=0):
+    __global_accounts = []
+
+    def __init__(self, name, balance=0, password="password"):
         self.__account_name = name
         self.__account_balance = balance
         self.set_balance(balance)
+        self.password = password
+        self.__global_accounts.append(self)
 
     def deposit(self, amount):
         if amount <= 0:
@@ -18,12 +22,21 @@ class Account:
         self.set_balance(self.get_balance() - amount)
         return True
     
+    def check_password(self, password: str) -> bool:
+        return password == self.password
+    
     def get_balance(self):
         return self.__account_balance
     
     def get_name(self):
         return self.__account_name
 
+    def find_global_account( name):
+        for acc in Account.__global_accounts:
+            if acc.get_name() == name:
+                return acc
+        return None
+    
     def set_balance(self, value):
         self.__account_balance = value if value > 0 else 0
 
