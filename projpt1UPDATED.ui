@@ -90,7 +90,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>200</y>
+      <y>250</y>
       <width>100</width>
       <height>40</height>
      </rect>
@@ -249,6 +249,37 @@
     </property>
     <property name="text">
      <string>Amount</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="alabel_3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>205</y>
+      <width>70</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Comic Sans MS</family>
+      <pointsize>9</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Password</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="INPIN_2">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>200</y>
+      <width>240</width>
+      <height>30</height>
+     </rect>
     </property>
    </widget>
   </widget>
