@@ -11,9 +11,7 @@ class Controller(QMainWindow, Ui_ATM):
         
         self.Enter.clicked.connect(self.submit_input)
         self.Exit.clicked.connect(app.quit)
-    """
-    TODO:In projpt1UPDATED.ui, change the four entry fields to QLineEdit
-    """
+
     def get_inputs(self):
         """Returns a tuple of: First Name, Last Name, PIN, and Ammount"""
         acc_first_name = self.INFNAME.toPlainText()

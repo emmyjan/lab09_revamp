@@ -20,36 +20,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="INFNAME">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>50</y>
-      <width>240</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="INLNAME">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>100</y>
-      <width>240</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="INPIN">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>150</y>
-      <width>240</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QRadioButton" name="Withdraw">
     <property name="geometry">
      <rect>
@@ -74,16 +44,6 @@
     </property>
     <property name="text">
      <string>Deposit</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="INAMOUNT">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>420</y>
-      <width>240</width>
-      <height>30</height>
-     </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="Search">
@@ -272,11 +232,51 @@
      <string>Password</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="INPIN_2">
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>50</y>
+      <width>240</width>
+      <height>30</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="LNAMEIN">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>100</y>
+      <width>240</width>
+      <height>30</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ACCIN">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>150</y>
+      <width>240</width>
+      <height>30</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="PASSIN">
     <property name="geometry">
      <rect>
       <x>180</x>
       <y>200</y>
+      <width>240</width>
+      <height>30</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="AMIN">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>420</y>
       <width>240</width>
       <height>30</height>
      </rect>

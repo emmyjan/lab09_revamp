@@ -10,6 +10,6 @@ def main():
     window = uic.loadUi("projpt1UPDATED.ui")
     window.show()
     app.exec()
-# TODO add password to GUI, needs correct password to open account if name doesn't exist, make new account
+# TODO needs correct password to open account if name doesn't exist, make new account
 if __name__ == '__main__':
     main()
