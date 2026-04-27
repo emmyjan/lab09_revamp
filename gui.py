@@ -114,7 +114,7 @@ class Ui_ATM(object):
         self.AMIN.setMaxLength(100)
         self.AMIN.setObjectName("AMIN")
         self.output_label = QtWidgets.QLabel(parent=self.centralwidget)
-        self.output_label.setGeometry(QtCore.QRect(110, 350, 211, 61))
+        self.output_label.setGeometry(QtCore.QRect(60, 350, 311, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(9)
