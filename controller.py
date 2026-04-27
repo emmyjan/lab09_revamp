@@ -78,6 +78,8 @@ class Controller(QMainWindow, Ui_ATM):
             acc = Account(name, password=password)
             acc.write_to_csv("bank.csv")
             return acc
+        elif password != acc.get_password():
+            self.set_output_text(f"Invalid password, please try again.")
         else:
             type = "Saving Account" if acc.__class__ == SavingAccount else "Account" 
             self.set_output_text(f"Welcome, {vals[self.VAL_FNAME]} {vals[self.VAL_LNAME]}!\nYou currently have ${acc.get_balance():.2f} in your {type}.")
@@ -95,13 +97,18 @@ class Controller(QMainWindow, Ui_ATM):
                 self.set_output_text("UserError: No choice")
                 return
             elif choice == self.DEPOSIT_CHECKED:
-                acc.deposit(float(vals[self.VAL_BAL]))
-                self.set_output_text(f"Deposited!\nYour new balance is {acc.get_balance()}.")
+                if acc.deposit(float(vals[self.VAL_BAL])):
+                    self.set_output_text(f"Deposited!\nYour new balance is {acc.get_balance()}.")
+                else:
+                    self.set_output_text(f"Invalid deposit amount, please try again.")
             elif choice == self.WITHDRAW_CHECKED:
-                acc.withdraw(float(vals[self.VAL_BAL]))
-                self.set_output_text(f"Dispensed ${float(vals[self.VAL_BAL])}!\nYour new balance is {acc.get_balance()}.")
+                if acc.withdraw(float(vals[self.VAL_BAL])):
+                    self.set_output_text(f"Withdrew ${float(vals[self.VAL_BAL])}!\nYour new balance is {acc.get_balance()}.")
+                else:
+                    self.set_output_text(f"Invalid withdraw amount, please try again.")
         except ValueError:
-            self.set_output_text("UserError: Invalid balance")
+            self.set_output_text("UserError: Please enter a numeric value.")
+
 
         
     
