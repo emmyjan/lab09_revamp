@@ -46,6 +46,7 @@ class Account:
     
     def write_to_csv(self, filename):
         with open(filename, 'a') as cfile:
+            cfile.write("\n")
             write = csv.writer(cfile, lineterminator="\n")
             write.writerow([self.get_name(), self.get_balance(), self.get_password()])
 
@@ -62,7 +63,8 @@ class Account:
     def get_password(self):
         return self.__password
     
-    def find_global_account( name):
+    def find_global_account(name: str):
+        """Returns Account instance if name matches, otherwise None"""
         for acc in Account.__global_accounts:
             if acc.get_name() == name:
                 return acc
