@@ -46,6 +46,13 @@ class Controller(QMainWindow, Ui_ATM):
 
         return (acc_first_name, acc_last_name, acc_pin, acc_amt)
     
+    def set_output_text(self, text: str):
+        """Sets the text of the output-to-user label"""
+        self.output_label.setText(text)
+
+    def clear(self):
+        self.set_output_text("")
+
     def search_button(self) -> Account|SavingAccount:
         """Returns either an existing Account or new Account depending on
            if one exists in the global Account list 
@@ -57,15 +64,15 @@ class Controller(QMainWindow, Ui_ATM):
         try:
             balance = float(vals[3])
         except ValueError: #Ensure that balance is in float/int format
-            print("UserError: Invalid balance input")
+            self.set_output_text("UserError: Invalid balance input")
             return None
         for val in vals: #Ensure that user has filled out all fields
             if val == '':
-                print("UserError: Not all fields entered")
+                self.set_output_text("UserError: Not all fields entered")
                 return None
         acc = Account.find_global_account(name)
         if acc == None: #Create account if one does not already exist in global array
-            print("No account found. Creating new account")
+            self.set_output_text("No account found. Creating new account")
             acc = Account(name, balance, password=password)
             acc.write_to_csv("bank.csv")
             return acc
@@ -75,11 +82,11 @@ class Controller(QMainWindow, Ui_ATM):
         acc = Account.find_global_account(vals[self.VAL_FNAME] + vals[self.VAL_LNAME])
 
         if acc == None: #Error Case
-            print("UserError: Invalid search")
+            self.set_output_text("UserError: Invalid search")
             return
         choice = self.get_radio_choice()
         if choice == self.NONE_CHECKED: #Error Case
-            print("UserError: No choice")
+            self.set_output_text("UserError: No choice")
             return
         elif choice == self.DEPOSIT_CHECKED:
             acc.deposit(float(vals[self.VAL_BAL]))
