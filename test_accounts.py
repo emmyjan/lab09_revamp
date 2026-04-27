@@ -1,6 +1,5 @@
 from accounts import *
 
-ac = Account("Bobbiam")
-bac = Account("Mrrpus")
 
-print(Account.find_global_account("Mrrpus"))
+Account.populate_accounts("bank.csv")
+Account.print_global_accounts()

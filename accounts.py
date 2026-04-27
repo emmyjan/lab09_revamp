@@ -1,3 +1,6 @@
+import csv
+
+
 class Account:
     __global_accounts = []
 
@@ -5,9 +8,28 @@ class Account:
         self.__account_name = name
         self.__account_balance = balance
         self.set_balance(balance)
-        self.password = password
+        self.__password = password
         self.__global_accounts.append(self)
 
+    def print_global_accounts():
+        
+        for ac in Account.__global_accounts:
+            print(ac.get_name())
+            
+        print(Account.__global_accounts)   
+
+    def populate_accounts(filename: str):
+        Account.__global_accounts = []
+        with open(filename) as cfile:
+            read = csv.reader(cfile, delimiter=",", lineterminator='\n')
+            for line, row in enumerate(read):
+                try:
+                    Account(row[0],int(row[1]),row[2])
+                except IndexError:
+                    print(f"Error in CVS formatting on line {line}")
+                except ValueError:
+                    print(f"Error in CVS formatting on line {line}")                    
+        
     def deposit(self, amount):
         if amount <= 0:
             return False
@@ -22,8 +44,13 @@ class Account:
         self.set_balance(self.get_balance() - amount)
         return True
     
+    def write_to_csv(self, filename):
+        with open(filename, 'a') as cfile:
+            write = csv.writer(cfile, lineterminator="\n")
+            write.writerow([self.get_name(), self.get_balance(), self.get_password()])
+
     def check_password(self, password: str) -> bool:
-        return password == self.password
+        return password == self.__password
     
     def get_balance(self):
         return self.__account_balance
@@ -31,12 +58,19 @@ class Account:
     def get_name(self):
         return self.__account_name
 
+    #This feels so wrong to write
+    def get_password(self):
+        return self.__password
+    
     def find_global_account( name):
         for acc in Account.__global_accounts:
             if acc.get_name() == name:
                 return acc
         return None
     
+    def set_password(self, password):
+        self.__password = password
+
     def set_balance(self, value):
         self.__account_balance = value if value > 0 else 0
 
