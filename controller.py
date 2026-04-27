@@ -17,7 +17,6 @@ class Controller(QMainWindow, Ui_ATM):
         super().__init__()
         self.setupUi(self)
         Account.populate_accounts("bank.csv")
-        print(Account.print_global_accounts())
         self.app = app
         self.Search.clicked.connect(self.search_button)
         self.Exit.clicked.connect(self.exit_button)
