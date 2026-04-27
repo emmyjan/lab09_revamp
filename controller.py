@@ -4,13 +4,38 @@ from accounts import *
 
 class Controller(QMainWindow, Ui_ATM):
 
+    WITHDRAW_CHECKED = 0
+    DEPOSIT_CHECKED = 1
+    NONE_CHECKED = 2
+
+    VAL_FNAME = 0
+    VAL_LNAME = 1
+    VAL_PWORD = 2
+    VAL_BAL = 3
+
     def __init__(self, app: QApplication):
         super().__init__()
         self.setupUi(self)
+        Account.populate_accounts("bank.csv")
+        print(Account.print_global_accounts())
         self.app = app
-        
-        self.Enter.clicked.connect(self.submit_input)
-        self.Exit.clicked.connect(app.quit)
+        self.Search.clicked.connect(self.search_button)
+        self.Exit.clicked.connect(self.exit_button)
+        self.Enter.clicked.connect(self.submit_button)
+
+    def exit_button(self):
+        Account.write_all_accounts_to_csv("bank.csv")
+        Account.print_global_accounts()
+        self.app.quit()
+
+    def get_radio_choice(self):
+        """Returns a number corresponing to either WITHDRAW_CHECKED or DEPOSIT_CHECKED or NONE_CHECKED"""
+        if self.Withdraw.isChecked():
+            return self.WITHDRAW_CHECKED
+        elif self.Deposit.isChecked():
+            return self.DEPOSIT_CHECKED
+        else:
+            return self.NONE_CHECKED
 
     def get_inputs(self):
         """Returns a tuple of: First Name, Last Name, PIN, and Amount"""
@@ -21,21 +46,45 @@ class Controller(QMainWindow, Ui_ATM):
 
         return (acc_first_name, acc_last_name, acc_pin, acc_amt)
     
-    def submit_input(self):
+    def search_button(self) -> Account|SavingAccount:
+        """Returns either an existing Account or new Account depending on
+           if one exists in the global Account list 
+        """
         vals = self.get_inputs()
-        name = vals[0] + vals[1]
-        password = vals[2]
-        balance = float(vals[3])
-        for val in vals:
+        name = vals[self.VAL_FNAME] + vals[self.VAL_LNAME]
+        password = vals[self.VAL_PWORD]
+
+        try:
+            balance = float(vals[3])
+        except ValueError: #Ensure that balance is in float/int format
+            print("UserError: Invalid balance input")
+            return None
+        for val in vals: #Ensure that user has filled out all fields
             if val == '':
                 print("UserError: Not all fields entered")
-                return
+                return None
         acc = Account.find_global_account(name)
-        if acc == None:
+        if acc == None: #Create account if one does not already exist in global array
             print("No account found. Creating new account")
             acc = Account(name, balance, password=password)
             acc.write_to_csv("bank.csv")
+            return acc
+        
+    def submit_button(self):
+        vals = self.get_inputs()
+        acc = Account.find_global_account(vals[self.VAL_FNAME] + vals[self.VAL_LNAME])
+
+        if acc == None: #Error Case
+            print("UserError: Invalid search")
             return
-        print(acc)
-        print(vals)
+        choice = self.get_radio_choice()
+        if choice == self.NONE_CHECKED: #Error Case
+            print("UserError: No choice")
+            return
+        elif choice == self.DEPOSIT_CHECKED:
+            acc.deposit(float(vals[self.VAL_BAL]))
+        elif choice == self.WITHDRAW_CHECKED:
+            acc.withdraw(float(vals[self.VAL_BAL]))
+
+        
     

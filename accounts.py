@@ -10,21 +10,35 @@ class Account:
         self.set_balance(balance)
         self.__password = password
         self.__global_accounts.append(self)
-
+        
     def print_global_accounts():
         
         for ac in Account.__global_accounts:
             print(ac.get_name())
             
-        print(Account.__global_accounts)   
+        print(Account.__global_accounts)
+
+    def write_all_accounts_to_csv(filename: str):
+        """Overwrites contents of filename and write all existing Accounts to filename"""
+        with open(filename, "w") as cfile:
+            for acc in Account.__global_accounts:
+                write = csv.writer(cfile, lineterminator="\n")
+                write.writerow([acc.get_name(), acc.get_balance(), acc.get_password(), acc.__class__])
 
     def populate_accounts(filename: str):
+        """Populates __global_accounts with Accounts in CSV file"""
         Account.__global_accounts = []
         with open(filename) as cfile:
             read = csv.reader(cfile, delimiter=",", lineterminator='\n')
             for line, row in enumerate(read):
+                #Attempt to create either a new Account or SavingAccount
                 try:
-                    Account(row[0],int(row[1]),row[2])
+                    if len(row) == 3 or row[3] == "<class 'accounts.Account'>":
+                        Account(row[0],balance=float(row[1]),password=row[2])
+                    elif row[3] == "<class 'accounts.SavingAccount'>":
+                        save_acc = SavingAccount(row[0])
+                        save_acc.set_balance(float(row[1]))
+                        save_acc.set_password(row[2])                        
                 except IndexError:
                     print(f"Error in CVS formatting on line {line}")
                 except ValueError:
@@ -45,10 +59,10 @@ class Account:
         return True
     
     def write_to_csv(self, filename):
+        """Writes Account instance to CSV"""
         with open(filename, 'a') as cfile:
-            cfile.write("\n")
             write = csv.writer(cfile, lineterminator="\n")
-            write.writerow([self.get_name(), self.get_balance(), self.get_password()])
+            write.writerow([self.get_name(), self.get_balance(), self.get_password(), self.__class__])
 
     def check_password(self, password: str) -> bool:
         return password == self.__password
