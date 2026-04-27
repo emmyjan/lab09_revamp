@@ -66,10 +66,10 @@ class Controller(QMainWindow, Ui_ATM):
         #     self.set_output_text("UserError: Invalid balance input")
         #     return None
             
-        # for val in vals: #Ensure that user has filled out all fields
-        #     if val == '':
-        #         self.set_output_text("UserError: Not all fields entered")
-        #         return None
+        for val in vals[0:3]: #Ensure that user has filled out all fields
+            if val == '':
+                self.set_output_text("UserError: Not all fields entered")
+                return None
 
         acc = Account.find_global_account(name)
         if acc == None: #Create account if one does not already exist in global array
