@@ -44,14 +44,16 @@ class Account:
                 except ValueError:
                     print(f"Error in CVS formatting on line {line}")                    
         
-    def deposit(self, amount):
+    def deposit(self, amount) -> bool:
+        """Withdraws certain amount from Account. Returns True if successful."""
         if amount <= 0:
             return False
         
         self.set_balance(self.__account_balance + amount)
         return True
     
-    def withdraw(self, amount):
+    def withdraw(self, amount) -> bool:
+        """Withdraws certain amount from Account. Returns True if successful."""
         if amount <= 0 or amount > self.get_balance():
             return False
         
