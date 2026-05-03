@@ -131,7 +131,7 @@ class Ui_ATM(object):
 
     def retranslateUi(self, ATM):
         _translate = QtCore.QCoreApplication.translate
-        ATM.setWindowTitle(_translate("ATM", "MainWindow"))
+        ATM.setWindowTitle(_translate("ATM", "Lab 09 Revamp"))
         self.Withdraw.setText(_translate("ATM", "Withdraw"))
         self.Deposit.setText(_translate("ATM", "Deposit"))
         self.Search.setText(_translate("ATM", "SEARCH"))
